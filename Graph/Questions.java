@@ -131,7 +131,7 @@ public class Questions {
         ans.add(src);
         return res;          
     }
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
+    public int[] findOrder_dfs(int numCourses, int[][] prerequisites) {
 
         int[] vis=new int[numCourses];
         Arrays.fill(vis,-1);
