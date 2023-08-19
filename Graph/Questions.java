@@ -92,6 +92,65 @@ public class Questions {
         return finalAns;
         
     }
-    
+ // 207 using dfs topological order
+    public boolean canFinish_dfsTopo(int src,List<List<Integer>> graph,int[] vis){
+
+        vis[src]=0;
+        boolean res=false;
+        for(int e:graph.get(src)){
+            if(vis[e]==0) return true;
+            else if(vis[e]==-1) res=res||canFinish_dfsTopo(e,graph,vis);
+        }
+        vis[src]=1;
+        return res;          
+    }
+    public boolean canFinish_dfs(int numCourses, int[][] prerequisites) {
+        int[] vis=new int[numCourses];
+        Arrays.fill(vis,-1);
+        List<List<Integer>> graph=new ArrayList<>();
+        for(int i=0;i<numCourses;i++) graph.add(i,new ArrayList<>());
+        for(int[] ar:prerequisites){
+            graph.get(ar[0]).add(ar[1]);
+        }
+        for(int i=0;i<numCourses;i++){
+            if(vis[i]==-1){
+                if(canFinish_dfsTopo(i,graph,vis)) return false;
+            }
+        }
+        return true;
+    }
+    //210 using dfs topological order 
+    public boolean canFinish_dfsTopo(int src,List<List<Integer>> graph,int[] vis,List<Integer> ans){
+        vis[src]=0;
+        boolean res=false;
+        for(int e:graph.get(src)){
+            if(vis[e]==0) return true;
+            else if(vis[e]==-1) res=res||canFinish_dfsTopo(e,graph,vis,ans);
+        }
+        vis[src]=1;
+        ans.add(src);
+        return res;          
+    }
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+
+        int[] vis=new int[numCourses];
+        Arrays.fill(vis,-1);
+        List<List<Integer>> graph=new ArrayList<>();
+        List<Integer> ans=new ArrayList<>();
+        for(int i=0;i<numCourses;i++) graph.add(i,new ArrayList<>());
+        for(int[] ar:prerequisites){
+            graph.get(ar[0]).add(ar[1]);
+        }
+        for(int i=0;i<numCourses;i++){
+            if(vis[i]==-1){
+                if(canFinish_dfsTopo(i,graph,vis,ans)) return new int[0];
+            }
+        }
+        int[] finalAns=new int[numCourses];
+        for(int i=0;i<ans.size();i++){
+            finalAns[i]=ans.get(i);
+        }
+        return finalAns;
+    }
     
 }
