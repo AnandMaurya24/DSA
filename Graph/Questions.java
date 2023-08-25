@@ -192,5 +192,59 @@ public class Questions {
         return level;  
     }
 
+//leetcode 1061
+        int[] par;
+        public int findPar(int u){
+            return par[u]==-1?u:(par[u]=findPar(par[u]));
+        }
+        public String smallestEquivalentString
+        (String s1, String s2, String baseStr) {
+            par=new int[26];
+            // for(int i=0;i<26;i++){
+            //     par[i]=i;
+            // }
+            Arrays.fill(par,-1);
+    
+            for(int i=0;i<s1.length();i++){
+                int p1=findPar(s1.charAt(i)-'a');
+                int p2=findPar(s2.charAt(i)-'a');
+                if(p1>p2){
+                    par[p1]=p2;
+                }else if(p2>p1){
+                    par[p2]=p1;
+                }
+            }
+            String ans="";
+            for(int i=0;i<baseStr.length();i++){
+                ans+= (char)
+                ((findPar(baseStr.charAt(i)-'a'))+'a');
+            }
+            return ans;
+        }
+    
+//leetcode 684
+
+class Solution {
+    int[] par;
+    public int findPar(int u){
+        return par[u]==-1?u:(par[u]=findPar(par[u]));
+    }
+    public int[] findRedundantConnection(int[][] edges) {
+        int N=edges.length+1;
+        par=new int[N];
+        Arrays.fill(par,-1);
+        for(int[] edge:edges){
+            int p1=findPar(edge[0]);
+            int p2=findPar(edge[1]);
+            if(p1!=p2){
+                par[p1]=p2;
+            }else{
+                return edge;
+            }
+        }
+        return new int[0];
+        
+    }
+}
     
 }
