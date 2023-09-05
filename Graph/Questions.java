@@ -246,5 +246,39 @@ class Solution {
         
     }
 }
+//Leetcode 839
+
+class Solution_839 {
+    int[] par;
+    public int findPar(int u){
+        return par[u]==u?u:(par[u]=findPar(par[u]));
+    }
+    public boolean isSimilar(String s1, String s2){
+        int count=0;
+        for(int i=0;i<s1.length();i++){
+            if(s1.charAt(i)!=s2.charAt(i) && ++count>2) return false;
+        }
+        return true;
+    }
+    public int numSimilarGroups(String[] strs) {
+        int count=strs.length;
+        int n=strs.length;
+        par=new int[n];
+        for(int i=0;i<strs.length;i++) par[i]=i;
+        for(int i=0;i<strs.length;i++){
+            for(int j=i+1;j<strs.length;j++){
+                if(isSimilar(strs[i],strs[j])){
+                    int p1=findPar(i);
+                    int p2=findPar(j);
+                    if(p1!=p2){
+                        par[p1]=p2;
+                        count--;
+                    }
+                }    
+            }
+        }
+        return count;       
+    }
+}
     
 }
