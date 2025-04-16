@@ -99,16 +99,16 @@ class Solution {
             // Create a new node with the same data
             Node copy = new Node(temp.val);
 
-        // Point the copy's next to
-        // the original node's next
-        copy.next = nextElement;
+            // Point the copy's next to
+            // the original node's next
+            copy.next = nextElement;
 
-        // Point the original
-        // node's next to the copy
-        temp.next = copy;
+            // Point the original
+            // node's next to the copy
+            temp.next = copy;
 
-        // Move to the next original node
-        temp = nextElement;
+            // Move to the next original node
+            temp = nextElement;
     }
 }
 
@@ -168,7 +168,6 @@ Node getDeepCopyList(Node head) {
         connectRandomPointers(head);
         return getDeepCopyList(head);
     }
-}
 }
 // @lc code=end
 
