@@ -1,4 +1,4 @@
-Solution {
+class Solution {
     public int lengthOfLongestSubstring(String s) {
         
         int si=0,ei=0;
