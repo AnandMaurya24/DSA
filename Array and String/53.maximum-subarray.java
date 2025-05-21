@@ -56,6 +56,7 @@
  */
 
 // @lc code=start
+//Kadanes algorithm
 class Solution {
     public int maxSubArray(int[] nums) {
         int currSum = nums[0];
