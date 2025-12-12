@@ -76,7 +76,7 @@
  
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0) return null;
+        if (lists == null || lists.length == 0) return null;
 
         // Use divide and conquer approach for O(N log k) complexity
         return mergeKListsHelper(lists, 0, lists.length - 1);
@@ -93,7 +93,7 @@ class Solution {
         return compareAndMerge(left, right);
     }
 
-    public ListNode compareAndMerge(ListNode list1, ListNode list2){
+    private ListNode compareAndMerge(ListNode list1, ListNode list2){
 
         if (list1 == null || list2 == null)  return list1 != null ? list1:list2;
         
