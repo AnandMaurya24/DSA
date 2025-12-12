@@ -1,6 +1,7 @@
 package Graph;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Graph {
     public static class Edge {
@@ -55,8 +56,14 @@ public class Graph {
     }
 
     public static void removeVtx(int u) {
-        for (int i = graph[u].size() - 1; i >= 0; i--) {
-            int v = graph[u].get(i).v;
+        // Collect all neighbors first to avoid modification during iteration
+        List<Integer> neighbors = new ArrayList<>();
+        for (Edge e : graph[u]) {
+            neighbors.add(e.v);
+        }
+        
+        // Remove edges
+        for (int v : neighbors) {
             removeEdge(u, v);
         }
     }

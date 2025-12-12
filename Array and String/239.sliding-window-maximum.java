@@ -57,30 +57,34 @@
 
 // @lc code=start
 
-import java.util.PriorityQueue;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
         if(nums.length == 1 || k==1) return nums;
-        int i =0,idx=0;
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) ->{
-             return nums[b]-nums[a];
-        });
         int n = nums.length;
         int[] ans = new int[n-k+1];
-
+        Deque<Integer> deque = new ArrayDeque<>();
+        int idx = 0;
         
-        while(i<n){
-
+        for(int i = 0; i < n; i++){
+            // Remove elements outside the current window
+            while(!deque.isEmpty() && deque.peekFirst() <= i - k) {
+                deque.pollFirst();
+            }
             
-            while(pq.size()!=0 && (i-k>=pq.peek())) pq.remove();
-
-            pq.add(i);
-
-            if(i>=k-1) ans[idx++]=nums[pq.peek()];
-
-            i++;
-
+            // Remove elements smaller than current element from rear
+            while(!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) {
+                deque.pollLast();
+            }
+            
+            deque.offerLast(i);
+            
+            // Add to result once we have processed at least k elements
+            if(i >= k - 1) {
+                ans[idx++] = nums[deque.peekFirst()];
+            }
         }
         return ans;
         

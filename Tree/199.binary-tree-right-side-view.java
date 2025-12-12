@@ -99,7 +99,7 @@ class Solution {
             int size = que.size();
             ans.add(que.getLast().val);
             while(size-->0){
-                TreeNode rn = que.remove();
+                TreeNode rn = que.removeFirst();
                 if(rn.left != null) que.addLast(rn.left);
                 if(rn.right != null) que.addLast(rn.right);
             }

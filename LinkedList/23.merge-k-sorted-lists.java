@@ -76,43 +76,47 @@
  
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        public ListNode mergeKLists(ListNode[] lists) {
-            if ( lists.length == 0) return null;
-    
-            ListNode ans=null;
-            for(int i = 0; i<lists.length; i++){
-                ans = compareAndMerge(ans, lists[i]);
-            }
-            return ans;
-            
-        }
-    
-        public ListNode compareAndMerge(ListNode list1, ListNode list2){
-    
-            if (list1 == null || list2 == null)  return list1 != null ? list1:list2;
-            
-            ListNode finalAns= new ListNode(-1);
-            ListNode prev = finalAns;
-            ListNode l1Head = list1;
-            ListNode l2Head = list2;
-            
-            
-            while(l1Head!=null && l2Head!=null){
-                if(l1Head.val <= l2Head.val){
-                    prev.next = l1Head;
-                    l1Head = l1Head.next;
-                }
-                else{
-                    prev.next = l2Head;
-                    l2Head = l2Head.next;
-                } 
-                prev = prev.next;
-            }
-    
-            prev.next = l1Head == null ? l2Head : l1Head;
-            return finalAns.next;
-        }
+        if (lists == null || lists.length == 0) return null;
+
+        // Use divide and conquer approach for O(N log k) complexity
+        return mergeKListsHelper(lists, 0, lists.length - 1);
+    }
+
+    private ListNode mergeKListsHelper(ListNode[] lists, int start, int end) {
+        if (start == end) return lists[start];
+        if (start > end) return null;
+
+        int mid = start + (end - start) / 2;
+        ListNode left = mergeKListsHelper(lists, start, mid);
+        ListNode right = mergeKListsHelper(lists, mid + 1, end);
         
+        return compareAndMerge(left, right);
+    }
+
+    private ListNode compareAndMerge(ListNode list1, ListNode list2){
+
+        if (list1 == null || list2 == null)  return list1 != null ? list1:list2;
+        
+        ListNode finalAns= new ListNode(-1);
+        ListNode prev = finalAns;
+        ListNode l1Head = list1;
+        ListNode l2Head = list2;
+        
+        
+        while(l1Head!=null && l2Head!=null){
+            if(l1Head.val <= l2Head.val){
+                prev.next = l1Head;
+                l1Head = l1Head.next;
+            }
+            else{
+                prev.next = l2Head;
+                l2Head = l2Head.next;
+            } 
+            prev = prev.next;
+        }
+
+        prev.next = l1Head == null ? l2Head : l1Head;
+        return finalAns.next;
     }
 }
 // @lc code=end
